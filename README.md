@@ -1,6 +1,11 @@
 ## Rogue JNDI
 A malicious LDAP server for JNDI injection attacks.
 
+FORK of
+```
+https://github.com/veracode-research/rogue-jndi
+```
+
 ### Description
 The project contains LDAP & HTTP servers for exploiting insecure-by-default Java JNDI API.<br> 
 In order to perform an attack, you can start these servers locally and then trigger a JNDI resolution on the vulnerable client, e.g.:

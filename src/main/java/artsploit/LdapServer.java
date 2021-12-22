@@ -30,7 +30,7 @@ class LdapServer extends InMemoryOperationInterceptor {
         try {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             
-            System.out.println(timestamp, "Starting LDAP server on 0.0.0.0:" + Config.ldapPort);
+            System.out.println(timestamp + "Starting LDAP server on 0.0.0.0:" + Config.ldapPort);
             InMemoryDirectoryServerConfig serverConfig = new InMemoryDirectoryServerConfig("dc=example,dc=com");
             serverConfig.setListenerConfigs(new InMemoryListenerConfig(
                     "listen",
@@ -94,7 +94,7 @@ class LdapServer extends InMemoryOperationInterceptor {
             }
         }
         if (controller == null) {
-            System.out.println(timestamp, " No controller for base '" + base + "', falling back to default.");
+            System.out.println(timestamp + " No controller for base '" + base + "', falling back to default.");
             controller = routes.get("");
         }
         try {

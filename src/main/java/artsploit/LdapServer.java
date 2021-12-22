@@ -28,7 +28,9 @@ class LdapServer extends InMemoryOperationInterceptor {
 
     public static void start() {
         try {
-            System.out.println("Starting LDAP server on 0.0.0.0:" + Config.ldapPort);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            
+            System.out.println(timestamp, "Starting LDAP server on 0.0.0.0:" + Config.ldapPort);
             InMemoryDirectoryServerConfig serverConfig = new InMemoryDirectoryServerConfig("dc=example,dc=com");
             serverConfig.setListenerConfigs(new InMemoryListenerConfig(
                     "listen",
@@ -63,7 +65,7 @@ class LdapServer extends InMemoryOperationInterceptor {
                 if(mapping.startsWith("/"))
                     mapping = mapping.substring(1); //remove first forward slash
 
-                System.out.printf("%s: Mapping ldap://%s:%s/%s to %s\n",
+                System.out.printf("%s Mapping ldap://%s:%s/%s to %s\n",
                         timestamp, Config.hostname, Config.ldapPort, mapping, controller.getName());
                 routes.put(mapping, instance);
             }
@@ -77,10 +79,11 @@ class LdapServer extends InMemoryOperationInterceptor {
      */
     @Override
     public void processSearchResult(InMemoryInterceptedSearchResult result) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         ReadOnlySearchRequest request = result.getRequest();
-        System.out.println("request: from: " + getRemoteAddress(result) + " " + request);
+        System.out.println(timestamp + " request: from: " + getRemoteAddress(result) + " " + request);
         String base = request.getBaseDN();
-        System.out.println("base: " + base);
+        System.out.println(timestamp + " base: " + base);
         LdapController controller = null;
         //find controller
         for(String key: routes.keySet()) {
@@ -91,7 +94,7 @@ class LdapServer extends InMemoryOperationInterceptor {
             }
         }
         if (controller == null) {
-            System.out.println("No controller for base '" + base + "', falling back to default.");
+            System.out.println(timestamp, " No controller for base '" + base + "', falling back to default.");
             controller = routes.get("");
         }
         try {

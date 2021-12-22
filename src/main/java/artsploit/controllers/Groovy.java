@@ -34,7 +34,7 @@ public class Groovy implements LdapController {
 
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println(timestamp + "Sending LDAP ResourceRef result for " + base + " with groovy.lang.GroovyShell payload");
+        System.out.println(timestamp + " Sending LDAP ResourceRef result for " + base + " with groovy.lang.GroovyShell payload");
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any

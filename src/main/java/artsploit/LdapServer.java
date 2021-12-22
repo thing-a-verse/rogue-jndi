@@ -47,7 +47,8 @@ class LdapServer extends InMemoryOperationInterceptor {
     }
 
     public LdapServer() throws Exception {
-
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+     
         //find all classes annotated with @LdapMapping
         Set<Class<?>> controllers = new Reflections(this.getClass().getPackage().getName())
                 .getTypesAnnotatedWith(LdapMapping.class);
@@ -61,8 +62,8 @@ class LdapServer extends InMemoryOperationInterceptor {
                 if(mapping.startsWith("/"))
                     mapping = mapping.substring(1); //remove first forward slash
 
-                System.out.printf("Mapping ldap://%s:%s/%s to %s\n",
-                        Config.hostname, Config.ldapPort, mapping, controller.getName());
+                System.out.printf("%s: Mapping ldap://%s:%s/%s to %s\n",
+                        timestamp, Config.hostname, Config.ldapPort, mapping, controller.getName());
                 routes.put(mapping, instance);
             }
         }

